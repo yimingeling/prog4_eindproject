@@ -1,10 +1,24 @@
 import '../css/style.css'
-import {Actor, Engine, Vector, DisplayMode, Label, BoundingBox, FontUnit, Color, Font, SolverStrategy} from "excalibur"
+import {
+    Actor,
+    Engine,
+    Vector,
+    DisplayMode,
+    Label,
+    BoundingBox,
+    FontUnit,
+    Color,
+    Font,
+    SolverStrategy,
+    Timer
+} from "excalibur"
 import {Resources, ResourceLoader} from './resources.js'
 import {Fish} from "./fish.js";
 import {Player} from "./player.js";
 import {UI} from "./ui.js";
 import {Level1} from "./scenes/level1.js";
+import {Gameover} from "./scenes/gameover.js";
+import {GameWon} from "./scenes/gamewon.js";
 
 
 const options = {
@@ -37,18 +51,43 @@ export class Game extends Engine {
         this.level1 = new Level1(this)
         this.add('level', this.level1)
 
+        this.gameover = new Gameover(this)
+        this.add('gameover', this.gameover)
 
-
+        this.gamewon = new GameWon(this)
+        this.add('gamewon', this.gamewon)
     }
 
     startGame() {
         console.log("start de game!")
         this.goToScene('level');
 
+        const timer = new Timer({
+            fcn: () => console.log('Every 100 ms'),
+            repeats: true,
+            interval: 100,
+        })
+
+        this.add(timer)
+
+        timer.start()
 
 
 
 
+
+    }
+
+    gameOver(){
+
+
+        this.goToScene('gameover');
+
+    }
+    gameWon(){
+
+
+        this.goToScene('gamewon');
 
     }
 }

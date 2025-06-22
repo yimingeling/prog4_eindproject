@@ -18,6 +18,10 @@ export class Hearts extends Actor {
     showHearts(amount) {
         this.sprite.sourceView.width = amount * 55;
         this.sprite.destSize.width = amount * 55;
+        if(amount<1) {
+            this.scene.engine.gameOver();
+
+        }
     }
 
 }

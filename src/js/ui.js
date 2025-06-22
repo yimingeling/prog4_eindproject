@@ -1,4 +1,4 @@
-import {Vector, Actor, Label, Font, FontUnit, Color, ScreenElement} from "excalibur"
+import {Vector, Actor, Label, Font, FontUnit, Color, ScreenElement, Timer} from "excalibur"
 import {Resources} from "./resources.js";
 import {Hearts} from "./hearts.js";
 
@@ -23,6 +23,10 @@ export class UI extends ScreenElement {
     }
 
     onInitialize(engine) {
+
+
+
+
         this.hearts = new Hearts()
 
         this.addChild(this.hearts)

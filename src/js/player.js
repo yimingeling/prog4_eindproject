@@ -8,6 +8,7 @@ export class Player extends Actor {
 
     hitpoints
     score
+    onGround = false
 
     constructor() {
         super({
@@ -31,6 +32,7 @@ export class Player extends Actor {
 
     onPreUpdate(engine, delta) {
         this.graphics.use(Resources.SeagullIdle.toSprite());
+
 
         let xspeed = 0;
         let yspeed = 0;
@@ -60,11 +62,13 @@ export class Player extends Actor {
         }
 
 
-        if (engine.input.keyboard.wasPressed(Keys.Space)) {
+        if (engine.input.keyboard.wasPressed(Keys.Space) && this.onGround === true) {
             this.graphics.use(Resources.SeagullFlap.toSprite());
 
             this.vel = new Vector(xspeed, delta);
             this.body.applyLinearImpulse(new Vector(0, -450 * delta))
+            this.onGround = false
+
         }
 
         if (this.pos.y > 1300) {
@@ -101,6 +105,7 @@ export class Player extends Actor {
 
 
         }
+        this.onGround = true
         console.log(`we hit something! ${event.other.owner}`)
     }
 }

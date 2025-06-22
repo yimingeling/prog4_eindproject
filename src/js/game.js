@@ -1,31 +1,55 @@
 import '../css/style.css'
-import { Actor, Engine, Vector, DisplayMode } from "excalibur"
-import { Resources, ResourceLoader } from './resources.js'
+import {Actor, Engine, Vector, DisplayMode, Label, BoundingBox, FontUnit, Color, Font, SolverStrategy} from "excalibur"
+import {Resources, ResourceLoader} from './resources.js'
+import {Fish} from "./fish.js";
+import {Player} from "./player.js";
+import {UI} from "./ui.js";
+import {Level1} from "./scenes/level1.js";
+
+
+const options = {
+    width: 800, height: 600,
+    backgroundColor: Color.White,
+    physics: {
+        solver: SolverStrategy.Realistic,
+        gravity: new Vector(0, 800),
+    },
+    maxFps: 60,
+    displayMode: DisplayMode.FitScreen,
+    suppressPlayButton: true
+}
+
 
 export class Game extends Engine {
 
+    ui
+    hearts
+
+
     constructor() {
-        super({ 
-            width: 1280,
-            height: 720,
-            maxFps: 60,
-            displayMode: DisplayMode.FitScreen
-         })
+        super(options)
         this.start(ResourceLoader).then(() => this.startGame())
+
+
+    }
+
+    onInitialize(engine) {
+        this.level1 = new Level1(this)
+        this.add('level', this.level1)
+
+
+
     }
 
     startGame() {
         console.log("start de game!")
-        const fish = new Actor()
-        fish.graphics.use(Resources.Fish.toSprite())
-        fish.pos = new Vector(500, 300)
-        fish.vel = new Vector(-10,0)
-        fish.events.on("exitviewport", (e) => this.fishLeft(e))
-        this.add(fish)
-    }
+        this.goToScene('level');
 
-    fishLeft(e) {
-        e.target.pos = new Vector(1350, 300)
+
+
+
+
+
     }
 }
 
